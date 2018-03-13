@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_button"
+        android:title="홈"
+        android:icon="@drawable/nav_home"
+        />
+
+    <item
+        android:id="@+id/music_book"
+        android:title="악보저장소"
+        android:icon="@drawable/nav_folder"
+        />
+    <item
+        android:id="@+id/account_management"
+        android:title="로그인/회원가입"
+        android:icon="@drawable/nav_account"
+        />
+</menu>

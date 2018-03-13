@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Okonomi Orgel</string>
+    <string name="user_name">황금비</string>
+    <string name="drawer_open">Open Navigation drawer</string>
+    <string name="drawer_close">Close Navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
