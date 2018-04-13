@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/my_sheet_image"
+            android:src="@drawable/ic_no_image"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="45dp"
+            android:maxHeight="55dp"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:text="always with me"
+            android:id="@+id/my_sheet_title"
+            android:textSize="18dp"
+            android:textIsSelectable="false"
+            android:layout_gravity="center_vertical"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

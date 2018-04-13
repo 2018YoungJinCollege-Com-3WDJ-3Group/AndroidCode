@@ -24,6 +24,12 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".PianoActivity"></activity>
+        <activity android:name=".SheetBoardActivity"></activity>
+        <activity android:name=".SheetPostActivity"></activity>
+        <activity android:name=".MySheetActivity"></activity>
+        <activity android:name=".PlayActivity"></activity>
+        <activity android:name=".FreeBoardActivity"></activity>
+        <activity android:name=".FreePostActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/id_box"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/user_id"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:hint="Id" />
+
+        <Button
+            android:id="@+id/duplicate_check"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="중복 체크" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/user_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_box"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Password" />
+
+    <EditText
+        android:id="@+id/user_email"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="Email" />
+
+    <LinearLayout
+        android:id="@+id/button_box"
+        android:orientation="horizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/user_email">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:text="확인"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:text="취소"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </RelativeLayout>

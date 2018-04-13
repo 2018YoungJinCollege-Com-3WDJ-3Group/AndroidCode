@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="30dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
     >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/white_line_box"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="25dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="25dp"
+        >
 
         <ImageView
             android:id="@+id/item_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:src="@drawable/nav_home"
-            />
+            android:layout_gravity="center"
+            android:src="@drawable/nav_home" />
 
         <TextView
-            android:text="악보기능"
             android:id="@+id/item_title"
-            android:layout_toRightOf="@+id/item_imageView"
-            android:layout_centerVertical="true"
-            android:paddingLeft="15dp"
-            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           />
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_imageView"
+            android:paddingLeft="15dp"
+            android:text="악보기능"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>

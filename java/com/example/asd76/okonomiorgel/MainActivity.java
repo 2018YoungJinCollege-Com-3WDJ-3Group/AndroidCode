@@ -1,55 +1,89 @@
 package com.example.asd76.okonomiorgel;
 
-import android.support.annotation.Nullable;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toolbar;
+
+import com.example.asd76.okonomiorgel.Adapter.TabListAdapter;
+import com.example.asd76.okonomiorgel.Item.ListViewItem;
+import com.example.asd76.okonomiorgel.Listener.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
 
+public class MainActivity extends AppCompatActivity{
+
+    NavigationView navigationView;
     boolean isDrawerOpened;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
-    ViewPager viewPager;
     RelativeLayout relativeLayout;
-    TabLayout tabLayout;
-    int [] tabIcons = {R.drawable.tab_musicsheet,
-                       R.drawable.tab_play,
-                       R.drawable.tab_board};
+    ListView listView;
+    TabListAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //액션바 타이틀 지우기
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        int color = Color.rgb(255, 214, 229);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
+        getSupportActionBar().setElevation(0);
 
         drawer = (DrawerLayout)findViewById(R.id.drawerLayout);
         relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
-        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        listView = (ListView)findViewById(R.id.main_listView);
 
-        setupViewpager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(this);
-        setupTabIcons();
+        //네비게이션 헤더 객체 획득
+        TextView nav_header = (TextView)navigationView.getHeaderView(0);
+        //네비게이션 메뉴 객체 획득
+        Menu nav_menu = (Menu)navigationView.getMenu();
+
+        SharedPreferences pref = getSharedPreferences("user_info", 0);
+        String user_name = pref.getString("user_name", null);
+
+        if(user_name != null){
+            //네비게이션 바 헤더 변경
+            nav_header.setText(user_name);
+            //로그인 메뉴 비활성화
+            nav_menu.findItem(R.id.menu_login).setVisible(false);
+            //로그아웃 메뉴 활성화
+            nav_menu.findItem(R.id.menu_logout).setVisible(true);
+        }
+
+        if(user_name == null){
+            //네비게이션 바 헤더 변경
+            nav_header.setText("비회원");
+            //로그인 메뉴 활성화
+            nav_menu.findItem(R.id.menu_login).setVisible(true);
+            //로그아웃 메뉴 비활성화
+            nav_menu.findItem(R.id.menu_logout).setVisible(false);
+        }
 
         //네비게이션 바 리스너 등록
-        NavigationView navigationView = (NavigationView)findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(new NavigationItemLis(this));
 
         isDrawerOpened = false;
@@ -69,25 +103,51 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
                 isDrawerOpened = false;
             }
         };
+
         drawer.addDrawerListener(toggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toggle.syncState();
-    }
 
-    //뷰페이저 설정
-    public void setupViewpager(ViewPager viewPager){
+        //메인 아이템 리스트업
+        ArrayList<ListViewItem> items = new ArrayList<>();
+        items.add(new ListViewItem(R.drawable.main_sheet_management, "악보 관리"));
+        items.add(new ListViewItem(R.drawable.main_transfer, "외부 악보 변환"));
+        items.add(new ListViewItem(R.drawable.main_piano, "실시간 연주"));
+        items.add(new ListViewItem(R.drawable.main_free_board, "자유 게시판"));
+        items.add(new ListViewItem(R.drawable.main_share_board, "악보 거래 게시판"));
 
-        tabPagerAdapter adapter = new tabPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new fragment_musicsheet(), "musicsheet");
-        adapter.addFragment(new fragment_play(), "play");
-        adapter.addFragment(new fragment_board(), "board");
-        viewPager.setAdapter(adapter);
-    }
+        //리스트 어댑터 설정
+        adapter = new TabListAdapter(items);
+        listView.setAdapter(adapter);
 
-    //탭 아이콘 설정
-    public void setupTabIcons(){
-        for(int i = 0; i < tabIcons.length; i++)
-            tabLayout.getTabAt(i).setIcon(tabIcons[i]);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ListViewItem item = (ListViewItem)parent.getAdapter().getItem(position);
+                Intent intent;
+                switch (item.getTitle()){
+                    case "악보 관리":
+                        intent = new Intent(MainActivity.this, MySheetActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        break;
+                    case "외부 악보 변환":
+                        break;
+                    case "실시간 연주":
+                        intent = new Intent(MainActivity.this, PianoActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        break;
+                    case "자유 게시판":
+                        intent = new Intent(MainActivity.this, FreeBoardActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        break;
+                    case "악보 거래 게시판":
+                        intent = new Intent(MainActivity.this, SheetBoardActivity.class);
+                        MainActivity.this.startActivity(intent);
+                        break;
+                }
+            }
+        });
+
     }
 
     //네비게이션 창이 열려있으면 닫기
@@ -106,47 +166,5 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         else
             return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        viewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {}
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {}
-
-    //페이지어댑터
-    class tabPagerAdapter extends FragmentPagerAdapter{
-
-        List<Fragment> fragments = new ArrayList<>();
-        List<String> tabTitles = new ArrayList<>();
-
-        public tabPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            fragments.add(fragment);
-            tabTitles.add(title);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) { return null; }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-    }
-
 
 }

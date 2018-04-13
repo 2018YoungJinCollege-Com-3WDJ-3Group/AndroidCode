@@ -21,11 +21,13 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/C0"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
-                <ImageView
+                <Button
+                    android:id="@+id/D0"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
@@ -36,109 +38,126 @@
                     android:background="@android:drawable/editbox_dropdown_dark_frame" />
 
                 <Button
-                    android:id="@+id/disableKey1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_dark_frame" />
 
                 <Button
+                    android:id="@+id/G0"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/A0"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/B0"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/C1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/D1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/E1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/F1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/G1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/A1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/B1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/C2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/D2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/E2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/F2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/G2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/A2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/B2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
+                    android:id="@+id/C3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
-                    android:id="@+id/A"
+                    android:id="@+id/D3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
 
                 <Button
-                    android:id="@+id/testKey"
+                    android:id="@+id/E3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@android:drawable/editbox_dropdown_light_frame" />
@@ -200,6 +219,8 @@
                     android:background="@android:drawable/progress_indeterminate_horizontal" />
 
                 <Button
+
+                    android:id="@+id/F1_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -207,6 +228,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/G1_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -214,6 +236,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/A1_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -221,6 +244,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/C2_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -228,6 +252,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/D2_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -235,6 +260,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/F2_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -242,6 +268,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/G2_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
@@ -249,6 +276,7 @@
                     android:background="@android:drawable/dark_header" />
 
                 <Button
+                    android:id="@+id/A2_"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
