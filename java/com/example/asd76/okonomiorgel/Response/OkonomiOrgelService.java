@@ -49,7 +49,7 @@ public interface OkonomiOrgelService {
     //악보 구매
     @FormUrlEncoded
     @POST("/Mpurchase")
-    Call<purchaseCheck> sheetPurchase(@Field("user_id") int user_id, @Field("score_id") int score_id);
+    Call<purchaseCheck> sheetPurchase(@Field("user_id") int user_id, @Field("score_id") int score_id, @Field("post_id") int post_id);
 
     @FormUrlEncoded
     @POST("/MpurchaseSheet")
@@ -58,4 +58,6 @@ public interface OkonomiOrgelService {
     @FormUrlEncoded
     @POST("/MretainSheet")
     Call<ArrayList<Sheet>> getWroteSheet(@Field("user_id") int user_id);
+
+
 }

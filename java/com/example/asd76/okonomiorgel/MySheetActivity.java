@@ -46,7 +46,6 @@ public class MySheetActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_sheet);
 
-        //액션바 타이틀 지우기
         getSupportActionBar().setTitle("악보 관리");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
@@ -87,6 +86,7 @@ public class MySheetActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<ArrayList<Sheet>> call, Response<ArrayList<Sheet>> response) {
                 if(response.isSuccessful() && response.body() != null){
+                    ArrayList<Sheet> sheets = response.body();
                     downSheet = response.body();
                     getWroteSheet();
                 }

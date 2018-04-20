@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -51,13 +52,14 @@ public class SheetBoardActivity extends AppCompatActivity{
         setContentView(R.layout.activity_musicsheet_board);
 
         //액션바 타이틀 지우기
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("악보 공유 게시판");
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
         //getSupportActionBar().setHomeAsUpIndicator(new ColorDrawable(Color.GREEN));
 
         listView = (ListView)findViewById(R.id.sheet_board_list);
-        searchView = (android.support.v7.widget.SearchView)findViewById(R.id.search_view);
-        spinner = (Spinner)findViewById(R.id.sheet_board_spinner);
+        //spinner = (Spinner)findViewById(R.id.sheet_board_spinner);
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         adapter = new SheetBoardAdapter();
         listView.setAdapter(adapter);
@@ -72,6 +74,7 @@ public class SheetBoardActivity extends AppCompatActivity{
         });
 
         //스피너 설정
+        /*
         final ArrayList spinnerItem = new ArrayList();
         spinnerItem.add("최신순");
         spinnerItem.add("판매순");
@@ -88,31 +91,7 @@ public class SheetBoardActivity extends AppCompatActivity{
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        //검색창 설정
-        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String q = query.toString().trim();
-                adapter.getFilter().filter(q);
-                spinner.setSelection(0);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        //검색창 닫으면 필터 삭제
-        searchView.setOnCloseListener(new android.support.v7.widget.SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                adapter.getFilter().filter("");
-                return false;
-            }
-        });
+        */
 
         //새로고침 시 데이터 새로 받아오기
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -159,6 +138,39 @@ public class SheetBoardActivity extends AppCompatActivity{
                 Log.e("response", "onFailure");
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sheet_board, menu);
+        searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.sheet_board_search).getActionView();
+
+        //검색창 설정
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String q = query.toString().trim();
+                adapter.getFilter().filter(q);
+                //spinner.setSelection(0);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        //검색창 닫으면 필터 삭제
+        searchView.setOnCloseListener(new android.support.v7.widget.SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                adapter.getFilter().filter("");
+                return false;
+            }
+        });
+
+        return true;
     }
 
     @Override

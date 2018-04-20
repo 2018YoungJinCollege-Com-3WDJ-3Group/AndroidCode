@@ -1,76 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:padding="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20dp"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/leftBox"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:background="@drawable/sheet_board_item"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:text="[카테고리]"
-            android:textSize="13dp"
-            android:id="@+id/sheet_board_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:text="제에에에에모오오오옥"
-            android:id="@+id/sheet_board_title"
-            android:textSize="20dp"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/sheet_board_thumnail"
+            android:src="@drawable/ic_no_image"
+            android:layout_marginRight="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:layout_marginLeft="55dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="판매자"
-                android:id="@+id/sheet_board_seller"
-                android:layout_width="wrap_content"
-                android:textSize="13dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text=" | "
+                android:id="@+id/sheet_board_category"
+                android:text="게임/애니"
+                android:textSize="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:text="2018.01.01"
-                android:id="@+id/sheet_board_created_at"
-                android:textSize="13dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text=" | "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="판매수 50"
-                android:id="@+id/sheet_board_sellnum"
-                android:textSize="13dp"
-                android:layout_width="wrap_content"
+                android:id="@+id/sheet_board_title"
+                android:text="바람 동경"
+                android:textSize="15dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        android:text="500P"
-        android:id="@+id/sheet_board_price"
-        android:textSize="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true" />
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sheet_board_price"
+            android:background="@drawable/divider"
+            android:layout_width="2dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/sheet_board_price"
+            android:text="500P"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:layout_marginLeft="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

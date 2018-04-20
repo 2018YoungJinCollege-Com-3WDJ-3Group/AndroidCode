@@ -37,6 +37,8 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 Log.e("sound...", "isLoaded : "+ sampleId);
+                Log.e("sound...", "status: "+ status);
+
                 if(sampleId == 30){
                     isPlaying = true;
                 }

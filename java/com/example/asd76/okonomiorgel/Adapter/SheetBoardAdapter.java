@@ -69,38 +69,13 @@ public class SheetBoardAdapter extends BaseAdapter implements Filterable{
         //레이아웃의 뷰 참조 획득
         TextView categoty = (TextView) convertView.findViewById(R.id.sheet_board_category);
         TextView title = (TextView) convertView.findViewById(R.id.sheet_board_title);
-        TextView seller = (TextView) convertView.findViewById(R.id.sheet_board_seller);
-        TextView created_at = (TextView) convertView.findViewById(R.id.sheet_board_created_at);
-        TextView sellnum = (TextView) convertView.findViewById(R.id.sheet_board_sellnum);
         TextView price = (TextView) convertView.findViewById(R.id.sheet_board_price);
 
         SheetBoardListItem item = filteredItemList.get(position);
 
-        java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date date = null;
-        try {
-            date = format.parse(item.getCreated_at());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        int today = Calendar.getInstance().get(Calendar.DATE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int postDate = calendar.get(Calendar.DATE);
-
-        String itemDate;
-        if(postDate == today){
-            itemDate = new java.text.SimpleDateFormat("hh:mm").format(date);
-        }else{
-            itemDate = new java.text.SimpleDateFormat("yy.MM.dd").format(date);
-        }
-
         //각 뷰에 현재 포지션의 아이템 값 설정
         categoty.setText("[" + item.getCategory()+"]");
         title.setText(item.getTitle());
-        seller.setText(item.getWriter());
-        created_at.setText(itemDate);
-        sellnum.setText("판매수 "+ item.getCount());
         price.setText(item.getPrice() + "P");
 
         return convertView;

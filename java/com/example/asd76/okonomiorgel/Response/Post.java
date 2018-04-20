@@ -30,6 +30,36 @@ public class Post {
     private String body;
     @SerializedName("created_at")
     private String created_at;
+    @SerializedName("score_thumnail")
+    private String score_thumnail;
+    @SerializedName("score_scorestring")
+    private String score_string;
+    @SerializedName("score_title")
+    private String score_title;
+
+    public String getScore_string() {
+        return score_string;
+    }
+
+    public void setScore_string(String score_string) {
+        this.score_string = score_string;
+    }
+
+    public String getScore_title() {
+        return score_title;
+    }
+
+    public void setScore_title(String score_title) {
+        this.score_title = score_title;
+    }
+
+    public String getScore_thumnail() {
+        return score_thumnail;
+    }
+
+    public void setScore_thumnail(String score_thumnail) {
+        this.score_thumnail = score_thumnail;
+    }
 
     public int getScore_id() {
         return score_id;

@@ -48,6 +48,24 @@
 
     </LinearLayout>
 
+    <TextView
+        android:text="zzzz"
+        android:id="@+id/progress_time"
+        android:layout_alignLeft="@id/progress_bar"
+        android:layout_below="@id/player"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="bbbb"
+        android:id="@+id/progress_total_time"
+        android:layout_alignRight="@id/progress_bar"
+        android:layout_below="@id/player"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"

@@ -30,17 +30,13 @@ public class MySheetAdapter extends BaseAdapter{
     Context context;
 
     public MySheetAdapter(ArrayList<Sheet> items) {
-
         originItems = new ArrayList<>();
         filteredItems = items;
         originItems = items;
-
-        Log.d("filteredItems", ((Sheet)filteredItems.get(0)).getTitle());
     }
 
     @Override
     public int getCount() {
-        Log.d("getCount", filteredItems.size() + "");
         return filteredItems.size();
     }
 

@@ -1,14 +1,18 @@
 package com.example.asd76.okonomiorgel;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 뒤로가기 구현
  */
 
-public class SheetPostActivity extends AppCompatActivity {
+public class SheetPostActivity extends Activity {
 
     OkonomiOrgelService service;
     String scoreString;
@@ -50,17 +54,22 @@ public class SheetPostActivity extends AppCompatActivity {
     PreviewThread previewThread;
     Boolean isLiked = false;
     int user_id = -1;
+    String user_name = null;
     int postNum;
-    LinearLayout btn_buy;
+    ImageButton btn_buy;
+    TextView price;
+    TextView num_like;
+    ImageButton btn_like;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_sheet_post);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_sheet_post);
 
         //액션바 타이틀 지우기
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         postNum = intent.getIntExtra("postNum", -1);
@@ -70,6 +79,7 @@ public class SheetPostActivity extends AppCompatActivity {
         //유저 확인
         SharedPreferences pref = getSharedPreferences("user_info", 0);
         user_id = pref.getInt("user_id", -1);
+        user_name = pref.getString("user_name", null);
 
         //url 지정
         String base_url = this.getString(R.string.base_url);
@@ -79,6 +89,17 @@ public class SheetPostActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service = retrofit.create(OkonomiOrgelService.class);
+
+        num_like = (TextView)findViewById(R.id.num_like);
+
+        //X 버튼 클릭 시 종료
+        ImageButton btn_clear = (ImageButton)findViewById(R.id.sheet_post_clear);
+        btn_clear.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         final ImageButton preview_btn = (ImageButton)findViewById(R.id.preview_icon);
         preview_btn.setOnClickListener(new View.OnClickListener() {
@@ -90,17 +111,17 @@ public class SheetPostActivity extends AppCompatActivity {
                     previewThread = new PreviewThread(SheetPostActivity.this, scoreString, tempo);
                     previewThread.execute();
                     isRun = true;
-                    preview_btn.setBackgroundResource(R.drawable.stop_preview);
+                    preview_btn.setImageResource(R.drawable.stop_preview);
+
                 }else{
                     stopPreview();
                     isRun = false;
-                    preview_btn.setBackgroundResource(R.drawable.play_preview);
+                    preview_btn.setImageResource(R.drawable.play_preview);
                 }
             }
         });
 
-        final ImageView icon_like = (ImageView)findViewById(R.id.img_like);
-        LinearLayout btn_like = (LinearLayout)findViewById(R.id.sheet_post_like);
+        btn_like = (ImageButton) findViewById(R.id.sheet_post_like);
         //좋아요 버튼 클릭 리스너
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,15 +129,15 @@ public class SheetPostActivity extends AppCompatActivity {
 
                 //데이터 전송 후 현재 like 수 받아오기
                 if(!isLiked)
-                    icon_like.setImageResource(R.drawable.ic_like_after);
+                    btn_like.setImageResource(R.drawable.ic_like_after);
                 else
-                    icon_like.setImageResource(R.drawable.ic_like_before);
+                    btn_like.setImageResource(R.drawable.ic_like_before);
 
                 isLiked = !isLiked;
             }
         });
 
-        btn_buy = (LinearLayout)findViewById(R.id.sheet_post_buy);
+        btn_buy = (ImageButton) findViewById(R.id.sheet_post_buy);
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,9 +161,27 @@ public class SheetPostActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Post>> call, Response<ArrayList<Post>> response) {
                 if(response.isSuccessful() && response != null){
                     ArrayList<Post> posts = response.body();
-                    post = posts.get(0);
+                    post = new Post();
+                    Log.e("posts size", posts.size()+"");
+
+                    post.setPost_id(posts.get(0).getPost_id());
+                    post.setBrd_id(posts.get(1).getBrd_id());
+                    post.setWriter(posts.get(2).getWriter());
+                    post.setScore_id(posts.get(3).getScore_id());
+                    post.setPrice(posts.get(4).getPrice());
+                    post.setCategory(posts.get(5).getCategory());
+                    post.setCount(posts.get(6).getCount());
+                    post.setLike(posts.get(7).getLike());
+                    post.setTitle(posts.get(8).getTitle());
+                    post.setBody(posts.get(9).getBody());
+                    post.setCreated_at(posts.get(10).getCreated_at());
+                    post.setScore_string(posts.get(11).getScore_string());
+                    post.setScore_thumnail(posts.get(12).getScore_thumnail());
+                    post.setScore_title(posts.get(13).getScore_title());
+
+                    getSheetInfo();
+                    buyEnable();
                     setPost(post);
-                    getSheet(post.getScore_id());
                 }
             }
 
@@ -175,7 +214,7 @@ public class SheetPostActivity extends AppCompatActivity {
    }
 
    public void getSheetInfo(){
-       String str = sheet.getScorestring();
+       String str = post.getScore_string();
        StringTokenizer st = new StringTokenizer(str, ";");
        ArrayList temp = new ArrayList();
        while(st.hasMoreTokens()){
@@ -183,6 +222,9 @@ public class SheetPostActivity extends AppCompatActivity {
        }
        tempo = Integer.parseInt(temp.get(0).toString());
        scoreString = temp.get(1).toString();
+       Log.e("tempo : ", tempo+"");
+       Log.e("scoreString : ", scoreString+"");
+
    }
 
     public void purchaseAlert(){
@@ -208,7 +250,7 @@ public class SheetPostActivity extends AppCompatActivity {
 
     public void sheetPurchase(){
 
-        final Call<purchaseCheck> response = service.sheetPurchase(user_id, sheet.getScore_id());
+        final Call<purchaseCheck> response = service.sheetPurchase(user_id, post.getScore_id(), post.getPost_id());
         response.enqueue(new Callback<purchaseCheck>() {
             @Override
             public void onResponse(Call<purchaseCheck> call, Response<purchaseCheck> response) {
@@ -218,7 +260,7 @@ public class SheetPostActivity extends AppCompatActivity {
                     Log.e("sheetPurchasecheck   : ", "/"+result + "/");
                     switch (result){
                         case "save":
-                            purchaseAlert();
+                            Toast.makeText(SheetPostActivity.this, "구매 성공", Toast.LENGTH_SHORT).show();
                             break;
                         case "false":
                             Toast.makeText(SheetPostActivity.this, "이미 구매한 악보입니다.", Toast.LENGTH_SHORT).show();
@@ -245,14 +287,12 @@ public class SheetPostActivity extends AppCompatActivity {
 
         //좋아요 여부 표시
         //악보 이름 표시
-        TextView category = (TextView)findViewById(R.id.sheet_post_category);
         TextView title = (TextView)findViewById(R.id.sheet_post_title);
         TextView seller = (TextView)findViewById(R.id.sheet_post_seller);
         TextView date = (TextView)findViewById(R.id.sheet_post_date);
         TextView sellnum = (TextView)findViewById(R.id.sheet_post_sellnum);
         TextView contents = (TextView)findViewById(R.id.sheet_post_contents);
-        TextView price = (TextView)findViewById(R.id.sheet_post_price);
-        TextView likenum = (TextView)findViewById(R.id.num_like);
+        price = (TextView)findViewById(R.id.sheet_post_price);
 
         //날짜, 시간
         java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -274,14 +314,13 @@ public class SheetPostActivity extends AppCompatActivity {
             itemDate = new java.text.SimpleDateFormat("yy.MM.dd").format(d);
         }
 
-        category.setText("[ " + post.getCategory() + " ]");
         title.setText(post.getTitle());
         seller.setText(post.getWriter());
         date.setText(itemDate);
         sellnum.setText("판매수 " + post.getCount());
         contents.setText(post.getBody());
         price.setText(post.getPrice() + "P");
-        likenum.setText(post.getLike()+"");
+        num_like.setText(post.getLike()+"");
 
     }
 
@@ -295,10 +334,10 @@ public class SheetPostActivity extends AppCompatActivity {
     }
 
     public void buyEnable(){
-        SharedPreferences pref = getSharedPreferences("user_info", 0);
-        String user_name = pref.getString("user_name", null);
-        if(sheet != null && sheet.getWriter() == user_name){
-            btn_buy.setEnabled(true);
+
+        if(post.getWriter().equals(user_name)){
+            btn_buy.setImageResource(R.drawable.ic_buy_disable);
+            btn_buy.setEnabled(false);
         }
     }
 
@@ -317,6 +356,7 @@ public class SheetPostActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         stopPreview();
+
     }
 
     @Override

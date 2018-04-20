@@ -25,7 +25,7 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".PianoActivity"></activity>
         <activity android:name=".SheetBoardActivity"></activity>
-        <activity android:name=".SheetPostActivity"></activity>
+        <activity android:name=".SheetPostActivity" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:name=".MySheetActivity"></activity>
         <activity android:name=".PlayActivity"></activity>
         <activity android:name=".FreeBoardActivity"></activity>

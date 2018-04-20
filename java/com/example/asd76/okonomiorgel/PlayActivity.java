@@ -51,10 +51,12 @@ public class PlayActivity extends FragmentActivity {
     ImageButton btn_pause;
     ImageButton btn_stop;
     ProgressBar progressBar;
+    TextView progress_time;
+    TextView progress_total_time;
     changeProgressBar changeProgressBar;
     Sheet sheet;
     Double tempo;
-    Double timeIs;
+    int timeIs;
     Boolean isPlaying = false;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,10 @@ public class PlayActivity extends FragmentActivity {
 
         Bundle bundle = getIntent().getExtras();
         sheet = bundle.getParcelable("sheet");
+        Log.e("onCreate", sheet.getTitle());
 
+        progress_total_time = (TextView)findViewById(R.id.progress_total_time);
+        progress_time = (TextView)findViewById(R.id.progress_time);
         progressBar = (ProgressBar)findViewById(R.id.progress_bar);
         btn_play = (ImageButton)findViewById(R.id.btn_play);
         btn_pause = (ImageButton)findViewById(R.id.btn_pause);
@@ -86,6 +91,8 @@ public class PlayActivity extends FragmentActivity {
                 }else if(socket.isConnected()) {
                     sendData(scoreString);
                     sendData("n");
+                    changeProgressBar = new changeProgressBar();
+                    changeProgressBar.execute();
                 }
             }
         });
@@ -106,7 +113,7 @@ public class PlayActivity extends FragmentActivity {
 
         //블루투스 어댑터 획득
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        if(bluetoothAdapter == null) Log.d("bluetooth", "adpater is null");
         //블루투스 활성화
         if(!bluetoothAdapter.isEnabled()){
             setBluetoothEnable();
@@ -137,22 +144,25 @@ public class PlayActivity extends FragmentActivity {
                 count++;
             }
         }
-        Double a = 30000/tempo;
-        Double b = a * count;
-        Double c = b/60;
-        timeIs = c % 60 ;
+        Double a = 30/tempo;
+        Double b = a * count; // 전부 시간
+                //  분:초/분:초
+        timeIs = b.intValue();
+        progress_time.setText(0 + " : " + 0);
+        progress_total_time.setText(timeIs/60 +" : "+timeIs%60);
+        Log.e("b", b+"");
     }
 
     class changeProgressBar extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             isPlaying = true;
-            Double temp = timeIs/100*1000;
-            Log.d("doInBackground", "timeIs" + timeIs);
-            Log.d("doInBackground", "temp" + temp);
-            for(int i = 0; i <= 100; i++){
+            int totalTime = timeIs;
+            Log.d("doInBackground", "timeIs" + totalTime);
+            progressBar.setMax(totalTime);
+            for(int i = 0; i <= totalTime; i++){
                 try {
-                    Thread.sleep(temp.intValue());
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -164,6 +174,7 @@ public class PlayActivity extends FragmentActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
+            progress_time.setText(values[0]/60 + " : " + values[0]%60);
             progressBar.setProgress(values[0]);
         }
 
@@ -283,14 +294,27 @@ public class PlayActivity extends FragmentActivity {
         }
     }
 
+    public void stopProgress(){
+        if(changeProgressBar != null){
+            changeProgressBar.cancel(true);
+            changeProgressBar = null;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopProgress();
+    }
+
     @Override
     protected void onDestroy() {
+
+        stopProgress();
+
         try{ops.close();
             socket.close();
         }catch (Exception e){}
-
-        if(changeProgressBar != null)
-            changeProgressBar.cancel(true);
 
         unregisterReceiver(broadcastReceiver);
         super.onDestroy();

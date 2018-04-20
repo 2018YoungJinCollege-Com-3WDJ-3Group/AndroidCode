@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.TabLayout
@@ -12,13 +12,18 @@
         app:tabIndicatorColor="@android:color/transparent"
         app:tabMode="fixed"
         app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/white"
-        app:tabSelectedTextColor="@color/darkPink"/>
+        app:tabTextColor="@color/gray"
+        app:tabSelectedTextColor="@color/white"/>
 
     <com.example.asd76.okonomiorgel.Adapter.CustomViewPager
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:padding="13dp"
+        android:layout_centerInParent="true"
         android:id="@+id/sheet_viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="330dp"
+        android:layout_height="490dp"
+        android:background="@drawable/white_box"
         android:layout_below="@+id/sheet_tabLayout"/>
 
 </RelativeLayout>
