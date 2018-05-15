@@ -17,7 +17,7 @@ import com.example.asd76.okonomiorgel.Fragments.fragment_downSheet;
 import com.example.asd76.okonomiorgel.Fragments.fragment_writeSheet;
 import com.example.asd76.okonomiorgel.Listener.TabSelectedLis;
 import com.example.asd76.okonomiorgel.Response.OkonomiOrgelService;
-import com.example.asd76.okonomiorgel.Response.Sheet;
+import com.example.asd76.okonomiorgel.Response.Score_info;
 
 import java.util.ArrayList;
 
@@ -37,8 +37,8 @@ public class MySheetActivity extends AppCompatActivity{
     SheetPagerAdapter adapter;
     CustomViewPager viewPager;
     TabLayout tabLayout;
-    ArrayList<Sheet> downSheet = new ArrayList<>();
-    ArrayList<Sheet> wroteSheet = new ArrayList<>();
+    ArrayList<Score_info> downSheetInfo = new ArrayList<>();
+    ArrayList<Score_info> wroteSheetInfo = new ArrayList<>();
     int user_id = -1;
 
     @Override
@@ -77,23 +77,24 @@ public class MySheetActivity extends AppCompatActivity{
         service = retrofit.create(OkonomiOrgelService.class);
 
         getPurchasedSheet();
+
     }
 
     public void getPurchasedSheet(){
 
-        final Call<ArrayList<Sheet>> response = service.getPurchaseSheet(user_id);
-        response.enqueue(new Callback<ArrayList<Sheet>>() {
+        final Call<ArrayList<Score_info>> response = service.getPurchaseSheet(user_id);
+        response.enqueue(new Callback<ArrayList<Score_info>>() {
             @Override
-            public void onResponse(Call<ArrayList<Sheet>> call, Response<ArrayList<Sheet>> response) {
+            public void onResponse(Call<ArrayList<Score_info>> call, Response<ArrayList<Score_info>> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    ArrayList<Sheet> sheets = response.body();
-                    downSheet = response.body();
+                    ArrayList<Score_info> sheetInfos = response.body();
+                    downSheetInfo = response.body();
                     getWroteSheet();
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Sheet>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Score_info>> call, Throwable t) {
                 Log.e("response", "failure");
             }
         });
@@ -101,38 +102,44 @@ public class MySheetActivity extends AppCompatActivity{
 
     public void getWroteSheet(){
 
-        final Call<ArrayList<Sheet>> response = service.getWroteSheet(user_id);
-        response.enqueue(new Callback<ArrayList<Sheet>>() {
+        final Call<ArrayList<Score_info>> response = service.getWroteSheet(user_id);
+        response.enqueue(new Callback<ArrayList<Score_info>>() {
             @Override
-            public void onResponse(Call<ArrayList<Sheet>> call, Response<ArrayList<Sheet>> response) {
+            public void onResponse(Call<ArrayList<Score_info>> call, Response<ArrayList<Score_info>> response) {
+
                 if(response.isSuccessful() && response.body() != null){
-                    wroteSheet = response.body();
+
+                    wroteSheetInfo = response.body();
                     setupViewpager(viewPager);
+
+                }else{
+                    Log.e("response", "body is null");
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Sheet>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Score_info>> call, Throwable t) {
                 Log.e("response", "failure");
             }
         });
+
     }
 
     //뷰페이저 설정
     public void setupViewpager(ViewPager viewPager){
 
-        Log.d("downSheet", downSheet.size()+"");
-        Log.d("wroteSheet", wroteSheet.size()+"");
+        Log.d("downSheetInfo", downSheetInfo.size()+"");
+        Log.d("wroteSheetInfo", wroteSheetInfo.size()+"");
 
         //작성한 악보 프래그먼트에 보낼 객체 설정
         Bundle writeBundle = new Bundle();
-        writeBundle.putParcelableArrayList("writeFragItems", (ArrayList<? extends Parcelable>)wroteSheet);
+        writeBundle.putParcelableArrayList("writeFragItems", (ArrayList<? extends Parcelable>) wroteSheetInfo);
         fragment_writeSheet writeFrag = new fragment_writeSheet();
         writeFrag.setArguments(writeBundle);
 
         //다운받은 악보 프래그먼트에 보낼 객체 설정
         Bundle downBundle = new Bundle();
-        downBundle.putParcelableArrayList("downFragItems", (ArrayList<? extends Parcelable>)downSheet);
+        downBundle.putParcelableArrayList("downFragItems", (ArrayList<? extends Parcelable>) downSheetInfo);
         fragment_downSheet downFrag = new fragment_downSheet();
         downFrag.setArguments(downBundle);
 

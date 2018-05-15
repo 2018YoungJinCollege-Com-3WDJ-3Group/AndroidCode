@@ -10,12 +10,18 @@ public class SheetBoardListItem implements Comparable<SheetBoardListItem>{
 
     @SerializedName("post_id")
     private int num;
-    private String writer;
     private int price;
     private String category;
-    private int count;
     private String title;
-    private String created_at;
+    private int download;
+
+    public int getDownload() {
+        return download;
+    }
+
+    public void setDownload(int download) {
+        this.download = download;
+    }
 
     public int getNum() {
         return num;
@@ -23,14 +29,6 @@ public class SheetBoardListItem implements Comparable<SheetBoardListItem>{
 
     public void setNum(int num) {
         this.num = num;
-    }
-
-    public String getWriter() {
-        return writer;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
     }
 
     public int getPrice() {
@@ -49,28 +47,12 @@ public class SheetBoardListItem implements Comparable<SheetBoardListItem>{
         this.category = category;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
     }
 
     //id로 게시글 생성순으로 정렬

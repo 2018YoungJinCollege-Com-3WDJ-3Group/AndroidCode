@@ -50,12 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setElevation(0);
 
-        TextView okonomi = (TextView)findViewById(R.id.okonomi);
+        //타이틀 폰트 변경
+        TextView txt_okonomi = (TextView)findViewById(R.id.okonomi);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/MYRIADPRO-BOLD.OTF");
-        okonomi.setTypeface(typeface);
+        txt_okonomi.setTypeface(typeface);
 
-        TextView orgel = (TextView)findViewById(R.id.orgel);
-        orgel.setTypeface(typeface);
+        TextView txt_orgel = (TextView)findViewById(R.id.orgel);
+        txt_orgel.setTypeface(typeface);
 
         drawer = (DrawerLayout)findViewById(R.id.drawerLayout);
         navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -65,9 +66,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //네비게이션 메뉴 객체 획득
         Menu nav_menu = (Menu)navigationView.getMenu();
 
+        //유저 이름 획득
         SharedPreferences pref = getSharedPreferences("user_info", 0);
         String user_name = pref.getString("user_name", null);
 
+        //로그인 시
         if(user_name != null){
             //네비게이션 바 헤더 변경
             nav_header.setText(user_name);
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             nav_menu.findItem(R.id.menu_logout).setVisible(true);
         }
 
+        //로그아웃 시
         if(user_name == null){
             //네비게이션 바 헤더 변경
             nav_header.setText("비회원");
@@ -86,14 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             nav_menu.findItem(R.id.menu_logout).setVisible(false);
         }
 
-        //네비게이션 바 리스너 등록
         navigationView.setNavigationItemSelectedListener(new NavigationItemLis(this));
 
         isDrawerOpened = false;
         toggle = new ActionBarDrawerToggle(this, drawer,
                 R.string.drawer_open, R.string.drawer_close){
 
-            //네비게이션 바 이벤트 설정
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -111,8 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toggle.syncState();
 
-        //주요 기능 버튼
-        ImageButton btn_transfer = (ImageButton)findViewById(R.id.btn_main_transfer);
+        ImageButton btn_transfer = (ImageButton)findViewById(R.id.btn_main_ranking);
         ImageButton btn_sheet = (ImageButton)findViewById(R.id.btn_main_sheet);
         ImageButton btn_piano = (ImageButton)findViewById(R.id.btn_main_piano);
         ImageButton btn_share = (ImageButton)findViewById(R.id.btn_main_share);
@@ -134,7 +135,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, MySheetActivity.class);
                 MainActivity.this.startActivity(intent);
                 break;
-            case R.id.btn_main_transfer:
+            case R.id.btn_main_ranking:
+                //(임시) 악보 제작 액티비티로 이동
+                intent = new Intent(MainActivity.this, CreateSheetActivity.class);
+                MainActivity.this.startActivity(intent);
                 break;
             case R.id.btn_main_piano:
                 intent = new Intent(MainActivity.this, PianoActivity.class);
@@ -151,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //네비게이션 창이 열려있으면 닫기
     @Override
     public void onBackPressed() {
         if(isDrawerOpened)

@@ -4,7 +4,7 @@ package com.example.asd76.okonomiorgel.Response;
  * Created by asd76 on 2018-03-19.
  */
 
-public class Register {
+public class Register_info {
     int id;
     String name;
     String password;

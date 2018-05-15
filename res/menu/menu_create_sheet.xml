@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_create_sheet_save"
+        android:icon="@drawable/create_sheet_save"
+        app:showAsAction="always"
+        android:title="악보 저장"
+        />
+
+    <item
+        android:id="@+id/menu_create_sheet_play"
+        android:icon="@drawable/create_sheet_play"
+        app:showAsAction="always"
+        android:title="악보 미리듣기"
+        />
+
+    <item
+        android:id="@+id/menu_create_sheet_clear"
+        android:icon="@drawable/create_sheet_new"
+        app:showAsAction="always"
+        android:title="악보 클리어"
+        />
+
+</menu>

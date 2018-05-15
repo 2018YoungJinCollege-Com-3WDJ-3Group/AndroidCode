@@ -3,32 +3,24 @@ package com.example.asd76.okonomiorgel.Fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.asd76.okonomiorgel.Adapter.MySheetAdapter;
+import com.example.asd76.okonomiorgel.CreateSheetActivity;
 import com.example.asd76.okonomiorgel.PlayActivity;
-import com.example.asd76.okonomiorgel.R;
-import com.example.asd76.okonomiorgel.Response.Sheet;
+import com.example.asd76.okonomiorgel.Response.Score_info;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +28,7 @@ import java.util.List;
 public class fragment_writeSheet extends ListFragment {
 
     MySheetAdapter adapter;
-    ArrayList<Sheet> items;
+    ArrayList<Score_info> items;
     AlertDialog.Builder alertDialogBuilder;
     ArrayAdapter dialogAdapter;
     int selectedItem;
@@ -64,15 +56,23 @@ public class fragment_writeSheet extends ListFragment {
             public void onClick(DialogInterface dialog, int which) {
                 //다이얼로그 지우기
                 dialog.dismiss();
+                Intent intent;
+                Bundle bundle;
                 switch (which){
                     case 0:
-                        Intent intent=new Intent(getActivity(),PlayActivity.class);
-                        Bundle bundle=new Bundle();
-                        bundle.putParcelable("sheet",(Sheet)adapter.getItem(selectedItem));
+                        intent=new Intent(getActivity(),PlayActivity.class);
+                        bundle=new Bundle();
+                        bundle.putParcelable("sheet", (Score_info)adapter.getItem(selectedItem));
                         intent.putExtras(bundle);
                         getActivity().startActivity(intent);
                         break;
                     case 1:
+                        //악보 편집
+                        intent = new Intent(getActivity(), CreateSheetActivity.class);
+                        bundle = new Bundle();
+                        bundle.putParcelable("editMode", (Score_info)adapter.getItem(selectedItem));
+                        intent.putExtras(bundle);
+                        getActivity().startActivity(intent);
                         break;
                 }
             }
@@ -89,6 +89,7 @@ public class fragment_writeSheet extends ListFragment {
 
         Bundle bundle = getArguments();
         items = bundle.getParcelableArrayList("writeFragItems");
+
         adapter = new MySheetAdapter(items);
         setListAdapter(adapter);
 

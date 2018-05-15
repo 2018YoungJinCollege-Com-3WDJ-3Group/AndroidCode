@@ -4,24 +4,19 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.asd76.okonomiorgel.Response.OkonomiOrgelService;
 import com.example.asd76.okonomiorgel.Response.Post;
-import com.example.asd76.okonomiorgel.Response.Sheet;
+import com.example.asd76.okonomiorgel.Response.Score_info;
 import com.example.asd76.okonomiorgel.Response.purchaseCheck;
 
 import java.text.ParseException;
@@ -48,7 +43,7 @@ public class SheetPostActivity extends Activity {
     OkonomiOrgelService service;
     String scoreString;
     int tempo;
-    Sheet sheet;
+    Score_info sheetInfo;
     Post post;
     Boolean isRun = false;
     PreviewThread previewThread;
@@ -155,30 +150,12 @@ public class SheetPostActivity extends Activity {
 
     public void getPost(){
 
-        final Call<ArrayList<Post>> response = service.getSheetBoardPost(postNum);
-        response.enqueue(new Callback<ArrayList<Post>>() {
+        final Call<Post> response = service.getSheetBoardPost(postNum);
+        response.enqueue(new Callback<Post>() {
             @Override
-            public void onResponse(Call<ArrayList<Post>> call, Response<ArrayList<Post>> response) {
+            public void onResponse(Call<Post> call, Response<Post> response) {
                 if(response.isSuccessful() && response != null){
-                    ArrayList<Post> posts = response.body();
-                    post = new Post();
-                    Log.e("posts size", posts.size()+"");
-
-                    post.setPost_id(posts.get(0).getPost_id());
-                    post.setBrd_id(posts.get(1).getBrd_id());
-                    post.setWriter(posts.get(2).getWriter());
-                    post.setScore_id(posts.get(3).getScore_id());
-                    post.setPrice(posts.get(4).getPrice());
-                    post.setCategory(posts.get(5).getCategory());
-                    post.setCount(posts.get(6).getCount());
-                    post.setLike(posts.get(7).getLike());
-                    post.setTitle(posts.get(8).getTitle());
-                    post.setBody(posts.get(9).getBody());
-                    post.setCreated_at(posts.get(10).getCreated_at());
-                    post.setScore_string(posts.get(11).getScore_string());
-                    post.setScore_thumnail(posts.get(12).getScore_thumnail());
-                    post.setScore_title(posts.get(13).getScore_title());
-
+                    post = response.body();
                     getSheetInfo();
                     buyEnable();
                     setPost(post);
@@ -186,7 +163,7 @@ public class SheetPostActivity extends Activity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<Post>> call, Throwable t) {
+            public void onFailure(Call<Post> call, Throwable t) {
                 Log.e("onFailure", t.getMessage());
 
             }
@@ -195,34 +172,37 @@ public class SheetPostActivity extends Activity {
     }
 
    public void getSheet(int score_id){
-       Call<ArrayList<Sheet>> response = service.getSheetBoardSheet(score_id);
-       response.enqueue(new Callback<ArrayList<Sheet>>() {
+       Call<ArrayList<Score_info>> response = service.getSheetBoardSheet(score_id);
+       response.enqueue(new Callback<ArrayList<Score_info>>() {
            @Override
-           public void onResponse(Call<ArrayList<Sheet>> call, Response<ArrayList<Sheet>> response) {
+           public void onResponse(Call<ArrayList<Score_info>> call, Response<ArrayList<Score_info>> response) {
                if(response.isSuccessful() && response.body() != null){
-                   ArrayList<Sheet> sheets = response.body();
-                   sheet = sheets.get(0);
+                   ArrayList<Score_info> sheetInfos = response.body();
+                   sheetInfo = sheetInfos.get(0);
                    getSheetInfo();
                }
            }
 
            @Override
-           public void onFailure(Call<ArrayList<Sheet>> call, Throwable t) {
+           public void onFailure(Call<ArrayList<Score_info>> call, Throwable t) {
                Log.e("reponse", "onFailure");
            }
        });
    }
 
    public void getSheetInfo(){
-       String str = post.getScore_string();
+
+       String str = post.getScorestring();
        StringTokenizer st = new StringTokenizer(str, ";");
        ArrayList temp = new ArrayList();
+
        while(st.hasMoreTokens()){
            temp.add(st.nextToken());
        }
+
        tempo = Integer.parseInt(temp.get(0).toString());
        scoreString = temp.get(1).toString();
-       Log.e("tempo : ", tempo+"");
+       Log.e("score_tempo : ", tempo+"");
        Log.e("scoreString : ", scoreString+"");
 
    }
@@ -315,10 +295,10 @@ public class SheetPostActivity extends Activity {
         }
 
         title.setText(post.getTitle());
-        seller.setText(post.getWriter());
+        seller.setText(post.getPrevious_writer());
         date.setText(itemDate);
-        sellnum.setText("판매수 " + post.getCount());
-        contents.setText(post.getBody());
+        sellnum.setText("판매수 " + post.getDownload());
+        contents.setText(post.getComment());
         price.setText(post.getPrice() + "P");
         num_like.setText(post.getLike()+"");
 
@@ -335,7 +315,7 @@ public class SheetPostActivity extends Activity {
 
     public void buyEnable(){
 
-        if(post.getWriter().equals(user_name)){
+        if(post.getPrevious_writer().equals(user_name)){
             btn_buy.setImageResource(R.drawable.ic_buy_disable);
             btn_buy.setEnabled(false);
         }

@@ -2,6 +2,7 @@ package com.example.asd76.okonomiorgel;
 
 import android.content.Context;
 import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,8 +28,12 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
         this.sheet = sheet;
         this.tempo = 30000/tempo;
 
+        //test
+        Log.e("score_tempo", tempo+"");
+        Log.e("score_info", sheet);
+
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build();
 
@@ -39,7 +44,7 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
                 Log.e("sound...", "isLoaded : "+ sampleId);
                 Log.e("sound...", "status: "+ status);
 
-                if(sampleId == 30){
+                if(sampleId == 30 && status == 0){
                     isPlaying = true;
                 }
             }
@@ -82,7 +87,7 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
     protected Void doInBackground(Void... voids) {
 
         while(true){
-            if(isPlaying = true) break;
+            if(isPlaying == true) break;
         }
 
         for(int i = 0; i < sheet.length(); i++){
@@ -90,6 +95,7 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
             if(!isPlaying) break;
 
             if(sheet.charAt(i) == 'r'){
+                Log.e("if 'r'-->", i+"");
                 try {
                     Thread.sleep(this.tempo);
                 } catch (InterruptedException e) {
@@ -97,6 +103,7 @@ public class PreviewThread extends AsyncTask<Void, Void, Void>{
                 }
             }else{
                 String temp = "" + sheet.charAt(i);
+                Log.e(temp + "-->", i+"");
                 soundPool.play((int) scaleMap.get(temp), 1f, 1f, 0, 0, 1f);
             }
         }

@@ -9,7 +9,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -20,8 +19,8 @@ public interface OkonomiOrgelService {
 
     //회원가입
     @FormUrlEncoded
-    @POST("/register")
-    Call<Register> signUp(@Field("name") String id, @Field("email") String email, @Field("password") String pw);
+    @POST("/Mregister")
+    Call<Register_info> signUp(@Field("name") String id, @Field("email") String email, @Field("password") String pw);
 
     //아이디 중복 체크
     @FormUrlEncoded
@@ -40,11 +39,11 @@ public interface OkonomiOrgelService {
     //악보 게시판 게시글
     @FormUrlEncoded
     @POST("/Mshare/show")
-    Call<ArrayList<Post>> getSheetBoardPost(@Field("post_id") int post_id);
+    Call<Post> getSheetBoardPost(@Field("post_id") int post_id);
 
     @FormUrlEncoded
     @POST("/MshareScore")
-    Call<ArrayList<Sheet>> getSheetBoardSheet(@Field("score_id") int score_id);
+    Call<ArrayList<Score_info>> getSheetBoardSheet(@Field("score_id") int score_id);
 
     //악보 구매
     @FormUrlEncoded
@@ -52,12 +51,30 @@ public interface OkonomiOrgelService {
     Call<purchaseCheck> sheetPurchase(@Field("user_id") int user_id, @Field("score_id") int score_id, @Field("post_id") int post_id);
 
     @FormUrlEncoded
-    @POST("/MpurchaseSheet")
-    Call<ArrayList<Sheet>> getPurchaseSheet(@Field("user_id") int user_id);
+    @POST("/MpurchaseList")
+    Call<ArrayList<Score_info>> getPurchaseSheet(@Field("user_id") int user_id);
 
     @FormUrlEncoded
     @POST("/MretainSheet")
-    Call<ArrayList<Sheet>> getWroteSheet(@Field("user_id") int user_id);
+    Call<ArrayList<Score_info>> getWroteSheet(@Field("user_id") int user_id);
 
+    //구매내역
+    @FormUrlEncoded
+    @POST("/history")
+    Call<ArrayList<Purchase_history>> getHistory(@Field("user_id") int user_id);
+
+    @FormUrlEncoded
+    @POST("/like")
+    Call<ArrayList<Like_record>> getLikeRecord(@Field("user_id") int user_id);
+
+    //악보 편집
+    @FormUrlEncoded
+    @POST("/???")
+    Call<Check> editSheet(@Field("user_id") int user_id, @Field("scoreString") String scoreString, @Field("socre_id") int score_id);
+
+    //악보 생성
+    @FormUrlEncoded
+    @POST()
+    Call<Check> createSheet(@Field("user_id") int user_id);
 
 }

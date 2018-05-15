@@ -12,9 +12,15 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItem;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -38,7 +44,7 @@ import java.util.UUID;
  * Created by asd76 on 2018-03-08.
  */
 
-public class PianoActivity extends FragmentActivity implements View.OnClickListener{
+public class PianoActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener{
 
     private static final int REQUEST_ENABLE_BT = 1;
 
@@ -51,16 +57,17 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
     ArrayAdapter adapter;
     AlertDialog.Builder alertDialogBuilder;
     OutputStream ops;
+    Boolean scrollable = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //액션바 숨기기
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //풀스크린
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setTitle("");
+
         setContentView(R.layout.activity_piano);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //디바이스 ArrayList
         deviceNameList = new ArrayList<>();
@@ -146,6 +153,7 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(broadcastReceiver, filter);
 
+
         //블루투스 어댑터 획득
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -157,7 +165,13 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
         //디바이스 목록 호출
         showSelectDialog();
 
+
     }//onCreate
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
@@ -328,8 +342,10 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
         try{
             ops.write(data.getBytes());
         }catch(Exception e){
-            Toast.makeText(this, "데이터 전송 중 오류 발생", Toast.LENGTH_SHORT).show();
+            Log.e("Exception", e.getMessage());
+            Toast.makeText(this, "데이터 전송 중 오류 발생 -> '"+data+"'", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -360,6 +376,41 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
         }
     };
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_piano, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //왜 return true???
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.menu_piano_scroll:
+
+                if(scrollable){
+                    scrollable = false;
+                    scrollView.setOnTouchListener(this);
+                    item.setIcon(R.drawable.piano_scroll_disable);
+                }
+                else{
+                    scrollable = true;
+                    scrollView.setOnTouchListener(null);
+                    item.setIcon(R.drawable.piano_scroll);
+                }
+
+                return true;
+            case R.id.menu_piano_device:
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch(requestCode){
             //블루투스 활성화
@@ -375,9 +426,18 @@ public class PianoActivity extends FragmentActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
+
         sendData(")");
-        try{ops.close();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try{
             socket.close();
+            ops.close();
         }catch (Exception e){}
 
         unregisterReceiver(broadcastReceiver);

@@ -87,7 +87,14 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
                     //로그인 성공 시
                     if(response.body().getLogin_check()){
                         User_info userInfo = response.body();
-                        Log.e("user info", ""+userInfo.getName());
+                        Log.e("user getName", "" + userInfo.getUser_name());
+                        Log.e("user getSession_id", "" + userInfo.getSession_id());
+                        Log.e("user getId", "" + userInfo.getUser_id());
+                        Log.e("user getPassword", "" + userInfo.getPassword());
+                        Log.e("user getEmail", "" + userInfo.getEmail());
+                        Log.e("user getLogin_check", "" + userInfo.getLogin_check());
+
+                        if(userInfo == null) Log.e("user info", "" + "is null");
                         setUserInfo(userInfo);
                     }
                     //로그인 실패 시
@@ -116,15 +123,15 @@ public class LoginActivity extends FragmentActivity implements View.OnClickListe
         editor.clear();
         editor.commit();
         editor.putString("user_session_id", userInfo.getSession_id());
-        editor.putInt("user_id", userInfo.getId());
-        editor.putString("user_name", userInfo.getName());
+        editor.putInt("user_id", userInfo.getUser_id());
+        editor.putString("user_name", userInfo.getUser_name());
         editor.putString("user_password", userInfo.getPassword());
         editor.putString("user_email", userInfo.getEmail());
         editor.commit();
 
         //MainActivity 이동
         Intent mainIntent = new Intent(this, MainActivity.class);
-        mainIntent.putExtra("login", userInfo.getName());
+        mainIntent.putExtra("login", userInfo.getUser_name());
         startActivity(mainIntent);
     }
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
+import com.example.asd76.okonomiorgel.HistoryActivity;
 import com.example.asd76.okonomiorgel.LoginActivity;
 import com.example.asd76.okonomiorgel.MainActivity;
 import com.example.asd76.okonomiorgel.R;
@@ -45,6 +46,10 @@ public class NavigationItemLis implements NavigationView.OnNavigationItemSelecte
                 break;
             case R.id.menu_logout:
                 logout();
+                break;
+            case R.id.purchase_history:
+                Intent intent = new Intent(context, HistoryActivity.class);
+                context.startActivity(intent);
         }
         return false;
     }

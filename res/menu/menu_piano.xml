@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_piano_scroll"
+        android:icon="@drawable/piano_scroll"
+        app:showAsAction="always"
+        android:title="악보 저장"
+        />
+
+    <item
+        android:id="@+id/menu_piano_device"
+        android:icon="@drawable/piano_device"
+        app:showAsAction="always"
+        android:title="디바이스 선택"
+        />
+
+</menu>

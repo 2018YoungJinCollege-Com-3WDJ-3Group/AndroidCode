@@ -23,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.asd76.okonomiorgel.Response.Sheet;
+import com.example.asd76.okonomiorgel.Response.Score_info;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class PlayActivity extends FragmentActivity {
     TextView progress_time;
     TextView progress_total_time;
     changeProgressBar changeProgressBar;
-    Sheet sheet;
+    Score_info sheetInfo;
     Double tempo;
     int timeIs;
     Boolean isPlaying = false;
@@ -70,8 +70,8 @@ public class PlayActivity extends FragmentActivity {
         setContentView(R.layout.activity_play);
 
         Bundle bundle = getIntent().getExtras();
-        sheet = bundle.getParcelable("sheet");
-        Log.e("onCreate", sheet.getTitle());
+        sheetInfo = bundle.getParcelable("score_info");
+        Log.e("onCreate", sheetInfo.getSubject());
 
         progress_total_time = (TextView)findViewById(R.id.progress_total_time);
         progress_time = (TextView)findViewById(R.id.progress_time);
@@ -112,25 +112,25 @@ public class PlayActivity extends FragmentActivity {
         registerReceiver(broadcastReceiver, filter);
 
         //블루투스 어댑터 획득
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(bluetoothAdapter == null) Log.d("bluetooth", "adpater is null");
+        //bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        //if(bluetoothAdapter == null) Log.d("bluetooth", "adpater is null");
         //블루투스 활성화
-        if(!bluetoothAdapter.isEnabled()){
-            setBluetoothEnable();
-        }
+        //if(!bluetoothAdapter.isEnabled()){
+          //  setBluetoothEnable();
+        //}
 
         TextView title = (TextView)findViewById(R.id.play_title);
-        title.setText(sheet.getTitle());
+        title.setText(sheetInfo.getSubject());
 
-        scoreString = sheet.getScorestring();
+        scoreString = sheetInfo.getScorestring();
 
-        showSelectDialog();
+        //showSelectDialog();
 
     }//end of onCreate
 
     public void getSheetInfo(){
 
-        String str = sheet.getScorestring();
+        String str = sheetInfo.getScorestring();
         StringTokenizer st = new StringTokenizer(str, ";");
         ArrayList temp = new ArrayList();
         while(st.hasMoreTokens()){

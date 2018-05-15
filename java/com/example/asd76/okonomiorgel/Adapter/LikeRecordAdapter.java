@@ -5,34 +5,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.asd76.okonomiorgel.R;
-import com.example.asd76.okonomiorgel.Response.Score_info;
+import com.example.asd76.okonomiorgel.Response.Like_record;
 
 import java.util.ArrayList;
 
 /**
- * Created by asd76 on 2018-03-26.
+ * Created by asd76 on 2018-05-10.
  */
 
-public class MySheetAdapter extends BaseAdapter{
+public class LikeRecordAdapter extends BaseAdapter{
 
-    private ArrayList<Score_info> sheetInfos;
+    private ArrayList<Like_record> likeRecords;
 
-    public MySheetAdapter(ArrayList<Score_info> items) {
-        sheetInfos = items;
+    public LikeRecordAdapter(ArrayList<Like_record> likeRecords) {
+        this.likeRecords = likeRecords;
     }
 
     @Override
     public int getCount() {
-        return sheetInfos.size();
+        return likeRecords.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return sheetInfos.get(position);
+        return likeRecords.get(position);
     }
 
     @Override
@@ -47,18 +45,11 @@ public class MySheetAdapter extends BaseAdapter{
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.my_sheet_item, parent, false);
+            convertView = inflater.inflate(R.layout.like_record_item, parent, false);
         }
 
-        Score_info item = sheetInfos.get(position);
-
-        TextView titleView = (TextView)convertView.findViewById(R.id.my_sheet_title);
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.my_sheet_image);
-
-        titleView.setText(item.getSubject());
-        imageView.setImageResource(R.drawable.ic_no_image);
+        Like_record record = likeRecords.get(position);
 
         return convertView;
     }
-
 }

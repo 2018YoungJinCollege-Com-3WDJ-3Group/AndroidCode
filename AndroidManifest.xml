@@ -30,6 +30,9 @@
         <activity android:name=".PlayActivity"></activity>
         <activity android:name=".FreeBoardActivity"></activity>
         <activity android:name=".FreePostActivity"></activity>
+        <activity android:name=".CreateSheetActivity"></activity>
+        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".LikeRecordActivity"></activity>
     </application>
 
 </manifest>

@@ -51,10 +51,10 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
-                    android:id="@+id/btn_main_transfer"
+                    android:id="@+id/btn_main_ranking"
                     android:layout_centerInParent="true"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/main_transfer"
+                    android:src="@drawable/main_ranking_board"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

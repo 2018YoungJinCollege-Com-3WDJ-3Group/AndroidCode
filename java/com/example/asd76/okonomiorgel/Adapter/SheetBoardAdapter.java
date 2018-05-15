@@ -90,9 +90,9 @@ public class SheetBoardAdapter extends BaseAdapter implements Filterable{
                 Collections.sort(filteredItemList, new Comparator<SheetBoardListItem>() {
                     @Override
                     public int compare(SheetBoardListItem o1, SheetBoardListItem o2) {
-                        if(o1.getCount() < o2.getCount())
+                        if(o1.getDownload() < o2.getDownload())
                             return 1;
-                        else if(o1.getCount() > o2.getCount())
+                        else if(o1.getDownload() > o2.getDownload())
                             return -1;
                         else
                             return 0;

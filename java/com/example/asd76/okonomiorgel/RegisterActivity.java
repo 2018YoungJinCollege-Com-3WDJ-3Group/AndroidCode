@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.asd76.okonomiorgel.Response.Check;
 import com.example.asd76.okonomiorgel.Response.OkonomiOrgelService;
-import com.example.asd76.okonomiorgel.Response.Register;
+import com.example.asd76.okonomiorgel.Response.Register_info;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,10 +117,10 @@ public class RegisterActivity extends FragmentActivity implements View.OnClickLi
 
     //입력된 회원 정보를 서버로 전송
     public void sendUserInfo(String id, String password, String email){
-        final Call<Register> response = service.signUp(id, email, password);
-        response.enqueue(new Callback<Register>() {
+        final Call<Register_info> response = service.signUp(id, email, password);
+        response.enqueue(new Callback<Register_info>() {
             @Override
-            public void onResponse(Call<Register> call, Response<Register> response) {
+            public void onResponse(Call<Register_info> call, Response<Register_info> response) {
                 if(response.isSuccessful() && response.body() != null){
                     Toast.makeText(RegisterActivity.this, "가입을 축하합니다", Toast.LENGTH_SHORT).show();
                     moveLoginActivity();
@@ -130,7 +130,7 @@ public class RegisterActivity extends FragmentActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<Register> call, Throwable t) {
+            public void onFailure(Call<Register_info> call, Throwable t) {
                 Log.e("response", "response is failure");
             }
         });
