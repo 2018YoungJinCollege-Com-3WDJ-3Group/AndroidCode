@@ -30,14 +30,14 @@
     <Button
         android:id="@+id/btn_login"
         android:text="Log in"
-        android:textColor="@color/white"
+
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_alignLeft="@+id/input_password"
         android:layout_below="@+id/input_password"
-        android:background="@drawable/white_line_box"/>
+        android:background="@drawable/white_box"/>
 
     <Button
         android:id="@+id/btn_signup"

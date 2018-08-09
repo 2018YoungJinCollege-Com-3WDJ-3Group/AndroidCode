@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.asd76.okonomiorgel.CustomTextView
+    <com.example.asd76.okonomiorgel.CustomView.VerticalTextView
         android:id="@+id/item_txt"
         android:textSize="25dp"
         android:layout_centerInParent="true"

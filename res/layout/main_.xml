@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:background="@drawable/circle"
+                android:background="@drawable/view_main_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"/>
@@ -47,13 +47,13 @@
         </FrameLayout>
 
         <ImageView
-            android:background="@drawable/circle"
+            android:background="@drawable/view_main_icon"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginRight="30dp"/>
 
         <ImageView
-            android:background="@drawable/circle"
+            android:background="@drawable/view_main_icon"
             android:layout_width="70dp"
             android:layout_height="70dp" />
 
@@ -66,13 +66,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:background="@drawable/circle"
+            android:background="@drawable/view_main_icon"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginRight="30dp"/>
 
         <ImageView
-            android:background="@drawable/circle"
+            android:background="@drawable/view_main_icon"
             android:layout_width="70dp"
             android:layout_height="70dp" />
 

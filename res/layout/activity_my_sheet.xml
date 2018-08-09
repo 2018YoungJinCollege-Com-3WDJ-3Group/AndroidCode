@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/my_score_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/transparent"
+                android:src="@drawable/action_bar_back" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/action_bar_logo" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/sheet_tabLayout"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        android:layout_gravity="center"
+        android:background="@drawable/score_board_title"
         app:tabIndicatorColor="@android:color/transparent"
         app:tabMode="fixed"
-        app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/gray"
-        app:tabSelectedTextColor="@color/white"/>
+        app:tabSelectedTextColor="@android:color/black"
+        app:tabTextColor="@color/gray" />
 
-    <com.example.asd76.okonomiorgel.Adapter.CustomViewPager
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="20dp"
-        android:padding="13dp"
-        android:layout_centerInParent="true"
+
+    <ImageView
+        android:layout_width="332dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:src="@drawable/divider" />
+
+    <com.example.asd76.okonomiorgel.Adapters.CustomViewPager
         android:id="@+id/sheet_viewPager"
-        android:layout_width="330dp"
-        android:layout_height="490dp"
-        android:background="@drawable/white_box"
-        android:layout_below="@+id/sheet_tabLayout"/>
+        android:layout_width="360dp"
+        android:layout_height="458dp"
+        android:layout_gravity="center" />
 
-</RelativeLayout>
+</LinearLayout>

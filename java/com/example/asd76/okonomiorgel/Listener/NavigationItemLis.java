@@ -6,9 +6,10 @@ import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
-import com.example.asd76.okonomiorgel.HistoryActivity;
-import com.example.asd76.okonomiorgel.LoginActivity;
-import com.example.asd76.okonomiorgel.MainActivity;
+import com.example.asd76.okonomiorgel.Activities.LikeRecordActivity;
+import com.example.asd76.okonomiorgel.Activities.PurchaseRecordActivity;
+import com.example.asd76.okonomiorgel.Activities.LoginActivity;
+import com.example.asd76.okonomiorgel.Activities.MainActivity;
 import com.example.asd76.okonomiorgel.R;
 
 /**
@@ -39,17 +40,24 @@ public class NavigationItemLis implements NavigationView.OnNavigationItemSelecte
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
+        Intent intent;
+
         switch (item.getItemId()){
             case R.id.menu_login:
-                Intent loginIntent = new Intent(context, LoginActivity.class);
-                context.startActivity(loginIntent);
+                intent = new Intent(context, LoginActivity.class);
+                context.startActivity(intent);
                 break;
             case R.id.menu_logout:
                 logout();
                 break;
             case R.id.purchase_history:
-                Intent intent = new Intent(context, HistoryActivity.class);
+                intent = new Intent(context, PurchaseRecordActivity.class);
                 context.startActivity(intent);
+                break;
+            case R.id.like_history:
+                intent = new Intent(context, LikeRecordActivity.class);
+                context.startActivity(intent);
+                break;
         }
         return false;
     }

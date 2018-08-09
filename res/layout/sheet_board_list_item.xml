@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:padding="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/transparent"
     android:layout_width="match_parent"
@@ -47,17 +46,10 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/sheet_board_price"
-            android:background="@drawable/divider"
-            android:layout_width="2dp"
-            android:layout_height="40dp" />
-
         <TextView
             android:id="@+id/sheet_board_price"
             android:text="500P"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:textAlignment="center"
             android:layout_marginLeft="5dp"
             android:layout_alignParentRight="true"

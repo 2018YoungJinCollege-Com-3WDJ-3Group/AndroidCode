@@ -12,12 +12,6 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="[카테고리]"
-            android:id="@+id/free_post_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:text="제목제목제목제목제목"
             android:id="@+id/free_post_title"
             android:textSize="25dp"
@@ -45,15 +39,7 @@
                 android:id="@+id/free_post_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:text=" | "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="판매수 40"
-                android:id="@+id/free_post_hits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -74,30 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp"/>
         </ScrollView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/free_post_like"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/white_line_box"
-        android:gravity="center"
-        android:clickable="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:id="@+id/free_img_like"
-            android:src="@drawable/ic_like_before"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/free_num_like"
-            android:text="55"
-            android:textSize="20dp"
-            android:layout_marginLeft="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

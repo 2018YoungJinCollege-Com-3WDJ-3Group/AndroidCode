@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="com.example.asd76.okonomiorgel.Fragments.fragment_writeSheet">
+    tools:context="com.example.asd76.okonomiorgel.Fragments.WroteScoreFragment">
 
 
 </FrameLayout>
